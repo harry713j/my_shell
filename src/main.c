@@ -8,6 +8,7 @@ int main(){
     char *input = (char*) malloc(512 * sizeof(char)); // user input on the shell
     FILE *file_ptr ;
 
+
     if (input == NULL)
     {
         perror("Unable to allocate memory!\n");
@@ -131,10 +132,39 @@ int main(){
             }
             
         }
+
+        else if (strcmp(command, "ls") == 0)
+        {
+            if (parameter != NULL)
+            {
+                printf("ls: invalid parameter...\n");
+            }
+            else
+            {
+                /* Print all the files and sub-directories */
+                char *path = print_working_directory();
+                print_files_and_sub_directories(path);
+
+                free(path);
+            }
+        }
+        
+        else if (strcmp(command, "cd") == 0)
+        {
+            if (parameter == NULL)
+            {
+                printf("cd: invalid parameter...\n");
+            }
+            else
+            {
+                /* Change the directory */
+                change_directory(parameter);
+            }
+            
+        }
         
         
-        
-        else if (strcmp(command, "exit") == 0)
+        else if (strcmp(command, "exit") == 0 || strcmp(command, "ex") == 0)
         {
             /* exit the shell */
             printf("Exiting the shell...\n");
